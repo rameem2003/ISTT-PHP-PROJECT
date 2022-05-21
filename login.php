@@ -4,22 +4,19 @@
 
 
     if(isset($_POST['submit'])){
-        $fname = $_POST["fname"];
-        $lname = $_POST["lname"];
-        $dob = $_POST["dob"];
         $email = $_POST["email"];
-        $uname = $_POST["uname"];
         $pass = $_POST["pass"];
-        $cpass = $_POST["cpass"];
 
-        $insert = "INSERT INTO  `user_data` (first_name, last_name, dob, email, uname, password) VALUES('$fname', '$lname', '$dob', '$email', '$uname', '$pass')";
+        $login = "SELECT * FROM `user_data` WHERE email = '$email' AND password = '$pass'";
 
-        if($pass != $cpass){
-            $msg[] = "Password not matching!";
+        $run_query = mysqli_query($conn, $login);
+
+        if(mysqli_num_rows($run_query) > 0){
+            $row = mysqli_fetch_assoc($run_query);
+            $_SESSION["user_id"] = $row['id'];
+            header('location:profile.php');
         }else{
-            $msg[] = "Register Success";
-            mysqli_query($conn, $insert);
-            header("location:login.php");
+            $msg[] = "Login Failed!!";
         }
     }
 
@@ -42,9 +39,9 @@
 </head>
 <body class="bg-info">
     
-    <section class="form_body bg-white rounded p-1">
+    <section class="login_form_body bg-white rounded p-1">
         <form action="" method="post">
-            <h1>Register</h1>
+            <h1>Login</h1>
 
             <?php 
             
@@ -58,31 +55,17 @@
 
 
             <div class="row">
-                <div class="col-md-6 col-sm-12">
-                    <label class="mt-3" for="fname">First name:</label>
-                    <input class="form-control" type="text" name="fname" id="lname">
-
-                    <label class="mt-3" for="dob">Date of birth:</label>
-                    <input class="form-control" type="date" name="dob" id="dob">
-                </div>
-
-                <div class="col-md-6 col-sm-12">
-                    <label class="mt-3" for="lname">Last name:</label>
-                    <input class="form-control" type="text" name="lname" id="lname">
-
+                <div class="col-md-12">
                     <label class="mt-3" for="email">Email:</label>
-                    <input class="form-control" type="email" name="email" id="email">
+                    <input class="form-control" type="email" name="email" id="email" required>
+
+
+                    
+                    <label class="mt-3" for="pass">Password: </label>
+                    <input class="form-control" type="password" name="pass" id="pass" required>
                 </div>
             </div>
 
-            <label class="mt-3" for="uname">Create username: </label>
-            <input class="form-control" type="text" name="uname" id="uname">
-
-            <label class="mt-3" for="pass">Create password: </label>
-            <input class="form-control" type="password" name="pass" id="pass">
-
-            <label class="mt-3" for="cpass">Confirm password: </label>
-            <input class="form-control" type="password" name="cpass" id="cpass">
 
 
             <input class="btn btn-primary mt-3" type="submit" name="submit" value="Register">

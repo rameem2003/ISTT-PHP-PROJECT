@@ -17,3 +17,9 @@ body{
 }
 
 /* register page end */
+
+/* login page */
+.login_form_body{
+    width: 35%;
+}
+/* login page end */
