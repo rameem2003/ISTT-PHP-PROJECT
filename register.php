@@ -86,6 +86,8 @@
 
 
             <input class="btn btn-primary mt-3" type="submit" name="submit" value="Register">
+
+            <p>Have account? <a href="./login.php">Login Now</a></p>
         </form>
     </section>
 
