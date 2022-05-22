@@ -23,3 +23,9 @@ body{
     width: 35%;
 }
 /* login page end */
+
+
+
+.profile .row p{
+    font-size: 30px;
+}
